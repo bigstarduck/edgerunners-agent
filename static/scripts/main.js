@@ -297,9 +297,10 @@ let skills = [
 ];
 
 let health = [
-   new Attribute("Hit Points", 30),
-   new Attribute("Armor", 8),
-]
+   new Attribute("HP", 30),
+   new Attribute("Armor: Head", 8),
+   new Attribute("Armor: Body", 8),
+];
 
 function renderStatBox() {
    let stat_box = document.querySelector("#stats .stat-box tbody");

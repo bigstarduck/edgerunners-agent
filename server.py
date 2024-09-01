@@ -7,6 +7,10 @@ app = Flask(__name__)
 # def hello(): 
 #     return "Hello World"
 
+@app.route('/')
+def index():
+    return "<a href=index.html>Click Me Now</a>"
+
 @app.route('/<path:path>')
 def send_report(path):
     return send_from_directory('static', path)
