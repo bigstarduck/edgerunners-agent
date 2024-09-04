@@ -1,6 +1,5 @@
 from flask import Flask, send_from_directory
 from models import character
-import json
 
 # creates a Flask application 
 app = Flask(__name__) 
