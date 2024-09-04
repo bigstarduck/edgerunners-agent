@@ -1,4 +1,6 @@
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, send_from_directory
+from models import character
+import json
 
 # creates a Flask application 
 app = Flask(__name__) 
@@ -12,8 +14,12 @@ def index():
     return "<a href=index.html>Click Me Now</a>"
 
 @app.route('/<path:path>')
-def send_report(path):
+def serve_static(path):
     return send_from_directory('static', path)
+
+@app.route('/get_character_data')
+def send_health_data():
+    return character.character_data
 
 # run the application 
 if __name__ == "__main__": 

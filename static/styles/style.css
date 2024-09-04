@@ -179,6 +179,13 @@ h6 {
    border-color: var(--cyber-light-gray);
 }
 
+.stat-box th {
+   font-size: 32px;
+   font-family: "Roboto Slab", "Open Sans", sans-serif;
+   color: var(--main-fg-color);
+   padding: 5%;
+}
+
 .spacing-header {
    visibility: hidden;
    line-height: 0;
