@@ -310,7 +310,7 @@ function renderSkillBox() {
 }
 
 window.onload = function() {
-   const request = new Request("http://localhost:5000/get_character_data");
+   const request = new Request(window.location.protocol + "//" + window.location.host + "/get_character_data");
    fetch(request)
       .then((response) => {
          if (response.status === 200) {
