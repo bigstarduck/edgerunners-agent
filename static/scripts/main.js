@@ -276,31 +276,14 @@ class GameLog {
 
 let game_log = new GameLog(["Player has joined the game!"])
 
-let stats = {
-   "INT": new Stat("INT", 7),
-   "REF": new Stat("REF", 7),
-   "DEX": new Stat("DEX", 6),
-   "TECH": new Stat("TECH", 5),
-   "COOL": new Stat("COOL", 7),
-   "WILL": new Stat("WILL", 6),
-   "LUCK": new Stat("LUCK", 6),
-   "MOVE": new Stat("MOVE", 7),
-   "BODY": new Stat("BODY", 7),
-   "EMP": new Stat("EMP", 5),
-};
+let stats = {};
 
-let skills = [
-   new Skill("Concentration", stats["WILL"], 10),
-   new Skill("Perception", stats["INT"], 12),
-   new Skill("Handgun", stats["REF"], 14),
-   new Skill("Basic Tech", stats["TECH"], 9),
-];
+let skills = [];
 
-let health = [
-   new Attribute("HP", 30),
-   new Attribute("Armor: Head", 8),
-   new Attribute("Armor: Body", 8),
-];
+let health = {
+   hit_points: [],
+   armor: [],
+}
 
 function renderStatBox() {
    let stat_box = document.querySelector("#stats .stat-box tbody");
@@ -310,7 +293,11 @@ function renderStatBox() {
 
 function renderHealthBox() {
    let health_box = document.querySelector("#health .stat-box tbody");
-   let health_list = health.map((attribute) => attribute.render());
+   let health_list = health.hit_points.map((attribute) => attribute.render());
+   let armor_header = document.createElement("th")
+   armor_header.innerHTML = "Armor";
+   health_list.push(armor_header);
+   health_list.push(...health.armor.map((attribute) => attribute.render()));
    health_box.replaceChildren(...health_list);
 }
 
@@ -321,10 +308,35 @@ function renderSkillBox() {
 }
 
 window.onload = function() {
+   const request = new Request(window.location.protocol + "//" + window.location.host + "/get_character_data");
+   fetch(request)
+      .then((response) => {
+         if (response.status === 200) {
+            return response.json();
+         } else {
+            throw new Error("Something went wrong on API server!");
+         }
+      })
+      .then((response) => {
 
-   renderStatBox();
-   renderHealthBox();
-   renderSkillBox();
+         stats = {};
+         response.stats.forEach((data) => stats[data.name] = new Stat(data.name, data.value));
+
+         health = {
+            hit_points: response.health.hit_points.map((data) => new Attribute(data.name, data.value)),
+            armor: response.health.armor.map((data) => new Attribute(data.name, data.value)),
+         };
+
+         skills = response.skills.map((data) => new Skill(data.name, stats[data.stat], data.value));
+
+         renderStatBox();
+         renderHealthBox();
+         renderSkillBox();
+
+      })
+      .catch((error) => {
+         console.error(error);
+      });
 
    game_log.render();
 
