@@ -155,6 +155,49 @@ class SkillCheckResult {
       this.result_value = this.skill_value + this.dice_result + this.stat_value;
    }
 
+   render() {
+      let wrapper = document.createElement("div");
+      
+      let head = document.createElement("div");
+      head.innerHTML = `Player made ${this.skill_name} check.`;
+      wrapper.append(head);
+      
+      let skill_info = document.createElement("div");
+      skill_info.innerHTML = `${this.skill_name}: ${this.skill_value}`;
+      wrapper.append(skill_info);
+      
+      let stat_info = document.createElement("div");
+      stat_info.innerHTML = `${this.stat_name}: ${this.stat_value}`;
+      wrapper.append(stat_info);
+
+      let roll_info = document.createElement("div");
+      roll_info.innerHTML = `Dice roll: ${this.dice_result}`;
+      wrapper.append(roll_info);
+
+      if (this.critical == "FAILURE") {
+         
+         let crit = document.createElement("div");
+         crit.className = "critical-failure";
+         crit.innerHTML = "Critical Failure!";
+         wrapper.append(crit);
+
+      } else if (this.critical == "SUCCESS") {
+         
+         let crit = document.createElement("div");
+         crit.className = "critical-success";
+         crit.innerHTML = "Critical Success!";
+         wrapper.append(crit);
+
+      }
+
+      let result = document.createElement("div");
+      result.className = "check-result";
+      result.innerHTML = `Result: ${this.result_value}`
+      wrapper.append(result);
+
+      return wrapper;
+   }
+
    toString() {
       let crit_message = "";
       if (this.critical == "FAILURE") {
