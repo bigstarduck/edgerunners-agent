@@ -284,7 +284,6 @@ let health = {
    hit_points: [],
    armor: [],
 }
-];
 
 function renderStatBox() {
    let stat_box = document.querySelector("#stats .stat-box tbody");
@@ -299,7 +298,6 @@ function renderHealthBox() {
    armor_header.innerHTML = "Armor";
    health_list.push(armor_header);
    health_list.push(...health.armor.map((attribute) => attribute.render()));
-   console.log(health_list);
    health_box.replaceChildren(...health_list);
 }
 
