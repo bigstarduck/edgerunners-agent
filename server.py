@@ -21,10 +21,7 @@ def serve_static(path):
 
 @app.route('/get_character_data')
 def send_character_data():
-    print(character.character_data)
-    for armor in character.character_data["armor"] :
-        print(armor)
-    return character.character_data
+    return character.get_character_data()
 
 @app.route('/get_character_stats')
 def send_character_stats():

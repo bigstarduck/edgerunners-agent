@@ -20,6 +20,9 @@ class Stat(db.Model):
         self.name = name
         self.value = value 
 
+    def as_dict (self):
+       return {c.name: getattr(self,c.name) for c in self.__table__.columns}
+
 class Health(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     ##location = db.Column(db.text)
@@ -27,6 +30,9 @@ class Health(db.Model):
 
     def __init__(self,hp):
         self.hp = hp
+
+    def as_dict (self):
+       return {c.name: getattr(self,c.name) for c in self.__table__.columns}
 
 class Armor(db.Model):
     id = db.Column(db.Integer,primary_key=True)
@@ -37,3 +43,5 @@ class Armor(db.Model):
         self.location = location
         self.hp = hp
 
+    def as_dict (self): 
+       return {c.name: getattr(self,c.name) for c in self.__table__.columns}

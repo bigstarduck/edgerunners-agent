@@ -1,9 +1,16 @@
-from db import app, Stat, Armor, Health
-with app.app_context():
-    character_stats = Stat.query.all()
-    character_health = Health.query.all()
-    character_armor = Armor.query.all()
-    character_data = {"stats": Stat.query.all(), "health": Health.query.all(), "armor": Armor.query.all()}
+from db import app, db, Stat, Armor, Health
+    
+def get_character_data():
+    with app.app_context():
+        character_stats = db.session.execute(db.select(Stat)).scalars()
+        character_health = db.session.execute(db.select(Health)).scalars()
+        character_armor = db.session.execute(db.select(Armor)).scalars()
+        character_data = {
+            "stats": [stat.as_dict() for stat in character_stats], 
+            "health": [hp.as_dict() for hp in character_health], 
+            "armor": [sp.as_dict() for sp in character_armor],
+        }
+    return character_data
     #     "name": "Neon Dream",
         
     #     "stats": [
