@@ -366,15 +366,15 @@ window.onload = function() {
          response.stats.forEach((data) => stats[data.name] = new Stat(data.name, data.value));
 
          health = {
-            hit_points: response.health.map((data) => new Attribute('HP', data.hp)),
+            hit_points: response.health.map((data) => new Attribute(data.location, data.hp)),
             armor: response.armor.map((data) => new Attribute(data.location, data.hp)),
          };
 
-         //skills = response.skills.map((data) => new Skill(data.name, stats[data.stat], data.value));
+         skills = response.skills.map((data) => new Skill(data.name, stats[data.stat], data.value));
 
          renderStatBox();
          renderHealthBox();
-         //renderSkillBox();
+         renderSkillBox();
 
       })
       .catch((error) => {
