@@ -1,5 +1,4 @@
-from flask import Flask, send_from_directory
-
+from flask import Flask, request, send_from_directory
 
 # creates a Flask application 
 app = Flask(__name__) 
@@ -23,17 +22,35 @@ def serve_static(path):
 def send_character_data():
     return character.get_character_data()
 
-@app.route('/get_character_stats')
-def send_character_stats():
-    return character.character_stats
+@app.route('/set_health', methods = ['POST', 'GET'])
+def set_health():
+    if request.method == 'POST':
+        body = request.get_json()
+        # print(body)
+        id = body['id']
+        hp = body['hp']
+        timestamp = body['timestamp']
 
-@app.route('/get_character_health')
-def send_character_health():
-    return character.character_health
+    else:
+        id = request.args.get('id')
+        hp = request.args.get('hp')
+        timestamp = request.args['timestamp']
 
-@app.route('/get_character_armor')
-def send_character_armor():
-    return character.character_armor
+    return character.set_health(id, hp, timestamp)
+
+@app.route('/set_armor', methods = ['POST', 'GET'])
+def set_armor():
+    if request.method == 'POST':
+        body = request.get_json()
+        id = body['id']
+        hp = body['hp']
+        timestamp = body['timestamp']
+    else:
+        id = request.args.get('id')
+        hp = request.args.get('hp')
+        timestamp = request.args['timestamp']
+
+    return character.set_armor(id, hp, timestamp)
 
 # run the application 
 if __name__ == "__main__": 

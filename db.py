@@ -1,13 +1,17 @@
+import datetime
 import os
+import time
+
 from typing import List
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import ForeignKey
+from sqlalchemy import TIMESTAMP, ForeignKey
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.sql import func
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -16,14 +20,26 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir,'data.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
 
 class ModelBase(DeclarativeBase):
+
+    last_modified: Mapped[TIMESTAMP] = mapped_column(TIMESTAMP, server_default=func.now())
 
     def as_dict (self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class Character(ModelBase):
+    def is_outdated(self, timestamp):
+        # convert last_modified to a unix timestamp for easy comparison
+        lm_time = time.mktime(self.last_modified.timetuple())
+        return lm_time >= timestamp
+
+db = SQLAlchemy(app, model_class=ModelBase)
+
+def create_db():
+    with app.app_context():
+        db.create_all()
+
+class Character(db.Model):
     __tablename__ = "character"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -45,14 +61,14 @@ class Character(ModelBase):
 
         return result
 
-class Stat(ModelBase):
+class Stat(db.Model):
     __tablename__ = "stat"
 
     id: Mapped[int] = mapped_column(primary_key=True)
 
     name: Mapped[str] = mapped_column()
 
-class CharacterStat(ModelBase):
+class CharacterStat(db.Model):
     __tablename__ = "character_stat"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -65,6 +81,8 @@ class CharacterStat(ModelBase):
     
     value: Mapped[int] = mapped_column()
 
+    # last_modified: Mapped[TIMESTAMP] = mapped_column(TIMESTAMP, server_default=func.now())
+
     def as_dict(self):
         result = super().as_dict()
 
@@ -72,7 +90,7 @@ class CharacterStat(ModelBase):
 
         return result
 
-class Skill(ModelBase):
+class Skill(db.Model):
     __tablename__ = "skill"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -89,7 +107,7 @@ class Skill(ModelBase):
 
         return result
 
-class CharacterSkill(ModelBase):
+class CharacterSkill(db.Model):
     __tablename__ = "character_skill"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -110,7 +128,7 @@ class CharacterSkill(ModelBase):
 
         return result
 
-class Health(ModelBase):
+class Health(db.Model):
     __tablename__ = "health"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -121,7 +139,11 @@ class Health(ModelBase):
     location: Mapped[str] = mapped_column()
     hp: Mapped[int] = mapped_column()
 
-class Armor(ModelBase):
+    def update_hp(self, hp, timestamp):
+        if not self.is_outdated(timestamp):
+            self.hp = hp
+
+class Armor(db.Model):
     __tablename__ = "armor"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -131,4 +153,8 @@ class Armor(ModelBase):
 
     location: Mapped[str] = mapped_column()
     hp: Mapped[int] = mapped_column()
+
+    def update_hp(self, hp, timestamp):
+        if not self.is_outdated(timestamp):
+            self.hp = hp
 

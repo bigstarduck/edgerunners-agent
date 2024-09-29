@@ -1,7 +1,11 @@
 from db import *
 
+
 with app.app_context():
-    db.create_all()
+
+    db.drop_all()
+
+    create_db()
 
     int_stat = Stat(name="INT")
     ref_stat = Stat(name="REF")
@@ -16,7 +20,7 @@ with app.app_context():
     concentration_skill = Skill(name="Concentration", stat=will_stat)
     perception_skill = Skill(name="Perception", stat=int_stat)
     handgun_skill = Skill(name="Handgun", stat=ref_stat)
-    basic_tech_skill = Skill(name="Basic_tech", stat=tech_stat)
+    basic_tech_skill = Skill(name="Basic Tech", stat=tech_stat)
     hacking_skill = Skill(name="Hacking", stat=tech_stat)
 
     db.session.add(
