@@ -94,24 +94,34 @@ class Skill {
 // Attributes are character values that change during the course of gameplay, 
 // like Health or Armor 
 class Attribute {
-   constructor(name, value = 0) {
+   id;
+   name;
+   value;
+
+   constructor(id, name, value = 0) {
+      this.id = id,
       this.name = name;
       this.value = value;
    }
-
    
-   handleDecreaseClick = () => {
-      this.changeValue(-1);
-      renderHealthBox();
-   }
-   
-   handleIncreaseClick = () => {
-      this.changeValue(1);
-      renderHealthBox();
-   }
-
    changeValue(amount) {
       this.value += amount;
+      renderHealthBox();
+   }
+
+   persistValue(path) {
+      fetch(window.location.protocol + "//" + window.location.host + "/" + path, {
+         method: "POST",
+         body: JSON.stringify({ id: this.id, hp: this.value, timestamp: Date.now(), }),
+         headers: { "Content-Type": "application/json", },
+      })
+      .then((response) => {
+            console.log(response);
+         })
+      .catch((error) => {
+            console.error(error);
+         });
+
    }
 
    render() {
@@ -133,6 +143,38 @@ class Attribute {
       stat_action.append(decrease_button);
 
       return render_stat(this, stat_action);
+   }
+}
+
+class Health extends Attribute {
+   constructor(id, name, value) {
+      super(id, name, value);
+   }
+
+   handleDecreaseClick = () => {
+      this.changeValue(-1);
+      this.persistValue("set_health");
+   }
+   
+   handleIncreaseClick = () => {
+      this.changeValue(1);
+      this.persistValue("set_health");
+   }
+}
+
+class Armor extends Attribute {
+   constructor(id, name, value) {
+      super(id, name, value);
+   }
+
+   handleDecreaseClick = () => {
+      this.changeValue(-1);
+      this.persistValue("set_armor");
+   }
+   
+   handleIncreaseClick = () => {
+      this.changeValue(1);
+      this.persistValue("set_armor");
    }
 }
 
@@ -366,8 +408,8 @@ window.onload = function() {
          response.stats.forEach((data) => stats[data.name] = new Stat(data.name, data.value));
 
          health = {
-            hit_points: response.health.hit_points.map((data) => new Attribute(data.name, data.value)),
-            armor: response.health.armor.map((data) => new Attribute(data.name, data.value)),
+            hit_points: response.health.map((data) => new Health(data.id, data.location, data.hp)),
+            armor: response.armor.map((data) => new Armor(data.id, data.location, data.hp)),
          };
 
          skills = response.skills.map((data) => new Skill(data.name, stats[data.stat], data.value));
