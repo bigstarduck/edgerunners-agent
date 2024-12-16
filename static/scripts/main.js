@@ -74,16 +74,15 @@ class Skill {
    }
    
    handleClick = () => {
-      this.makeCheck();
+      let result = this.makeCheck();
+      game_log.logEvent(check_result);
+      game_log.render();
+      // alert(check_result);
    }
 
    makeCheck() {
       let dice_result = rollD10();
-
-      let check_result = new SkillCheckResult(this, dice_result);
-      game_log.logEvent(check_result);
-      game_log.render();
-      // alert(check_result);
+      return new SkillCheckResult(this, dice_result);
    }
 
    render() {
@@ -428,4 +427,42 @@ window.onload = function() {
    // document.querySelector('#character-sheet').style.display = 'none';
    // document.querySelector('#character-sheet').style.display = 'block';
 
+}
+
+class Weapon{
+   constructor(name, skill, damage_dice=3) {
+      this.name = name;
+      this.skill = skill;
+      this.damage_dice = damage_dice;
+   }
+   
+   handleClick = () => {
+      this.makeCheck(12);
+   }
+
+   makeCheck(difficulty) {
+      //decide which skill to use
+      let skill_check = this.skill.makeCheck();
+
+      if (skill_check.result_value > difficulty) {
+         let dice_result = 0;
+         for (let index = 0; index < this.damage_dice; index++) {
+            dice_result += rollD6();
+         }
+         alert('You fired the pistol and hit your target and did damage');
+         alert(dice_result);
+      }
+      else {
+         alert('Your shot missed.');
+      }
+     
+      //let check_result = new SkillCheckResult(this, dice_result);
+      //game_log.logEvent(check_result);
+      //game_log.render();
+      // alert(check_result);
+   }
+
+   render() {
+      return render_stat(this);
+   }
 }
