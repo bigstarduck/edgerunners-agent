@@ -465,4 +465,14 @@ class Weapon{
    render() {
       return render_stat(this);
    }
+
+}
+
+function openInventory(inventoryType) {
+var i;
+var x = document.getElementsByClassName("inventory");
+for (i = 0; i < x.length; i++) {
+   x[i].style.display = "none";  
+}
+document.getElementById(inventoryType).style.display = "block";  
 }
