@@ -69,6 +69,36 @@ html {
    color: var(--main-fg-color);
 }
 
+@font-face {
+   font-family: "zerowax";
+   src: url("../fonts/Zerowax-yYGam.ttf");
+}
+
+@font-face {
+   font-family: "cyberCrown";
+   src: url("../fonts/CyberCrown.ttf");
+}
+
+@font-face {
+   font-family: "cyberCrownOne";
+   src: url("../fonts/CyberCrownOne.ttf");
+}
+
+@font-face {
+   font-family: "cyberCrownTwo";
+   src: url("../fonts/CyberCrownTwo.ttf");
+}
+
+@font-face {
+   font-family: "cyberCrownThree";
+   src: url("../fonts/CyberCrownThree.ttf");
+}
+
+@font-face {
+   font-family: "cyberCrownFour";
+   src: url("../fonts/CyberCrownFour.ttf");
+}
+
 body {
    width: 99%;
    margin: 0 auto;
@@ -79,7 +109,7 @@ h1 {
    margin: 0;
    padding: 20px 0;
    font-size: 5em;
-   font-family: "Chakra Petch", monospace;
+   font-family: "cyberCrownThree", "Chakra Petch", monospace;
    text-align: center;
 
    background-clip: text;
@@ -90,7 +120,7 @@ h1 {
 
 h2 {
    font-size: 3em;
-   font-family: "Chakra Petch", monospace;
+   font-family: "cyberCrownOne", "Chakra Petch", monospace;
    text-align: center;
 
    background-clip: text;
@@ -223,6 +253,41 @@ h6 {
    user-select: none;
    -webkit-user-select: none;
    touch-action: manipulation;
+}
+
+.inventory-button {
+   align-items: center;
+   background-color: initial;
+   background-image: linear-gradient(#3a3a3a, #1c1c1c);
+   border-radius: 8px;
+   border-width: 0;
+   box-shadow: 0 10px 20px rgba(0, 0, 0, .1),0 3px 6px rgba(0, 0, 0, .05);
+   box-sizing: border-box;
+   color: var(--cyber-yellow);
+   cursor: pointer;
+   font-family: "cyberCrownThree", monospace;
+   font-size: 1.6em;
+   justify-content: center;
+   line-height: 1;
+   height: 2em;
+   margin: .1rem;
+   outline: none;
+   padding: 0 1rem;
+   text-align: center;
+   text-decoration: none;
+   transform: translate3d(0, 0, 0);
+   transition: all 150ms;
+   vertical-align: center;
+   white-space: nowrap;
+   user-select: none;
+   -webkit-user-select: none;
+   touch-action: manipulation;
+}
+
+.inventory-button-bar {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   justify-content: center;
 }
 
 .action-button:hover {

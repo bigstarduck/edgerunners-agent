@@ -58,7 +58,7 @@ class Stat {
       let check_result = new StatCheckResult(this, dice_result);
       game_log.logEvent(check_result);
       game_log.render();
-      // alert(check_result);
+      alert(check_result);
    }
 
    render() {
