@@ -130,6 +130,11 @@ h6 {
    width: 98%;
 }
 
+#character-page {
+   display: grid;
+   grid-template-columns: 4fr 2fr;
+}
+
 .full-width-block {
    border-width: 20px;
    border-color: var(--cyber-cyan);
@@ -144,6 +149,7 @@ h6 {
 .block-box {
    display: flex;
    justify-content: center;
+   flex-wrap: wrap;
 }
 
 .display-block {
@@ -155,6 +161,7 @@ h6 {
    margin: 1%;
    width: 33%;
    background-color: var(--cyber-dark-gray);
+   min-width: 15em;
 }
 
 .stat-box {
@@ -246,13 +253,33 @@ h6 {
   }
 }
 
+#game-log {
+   position: fixed;
+   right: 5%;
+   top: 10em;
+   min-width: 20em;
+}
+
 .log-box {
-   min-height: 20lh;
+   min-height: 17lh;
    max-height: 20lh;
+   min-width: 100%;
    overflow-wrap: break-word;
    overflow-y: scroll;
    background-color: var(--main-bg-color);
    padding: 1%;
+
+}
+
+.sticky-log-block {
+   border-width: 20px;
+   border-color: var(--cyber-cyan);
+   border-style: solid;
+   border-radius: 3%;
+   padding: 1%;
+   margin: 1%;
+   width: 100%;
+   background-color: var(--cyber-dark-gray);
 }
 
 .log-entry {
