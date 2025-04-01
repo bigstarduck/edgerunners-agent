@@ -220,7 +220,7 @@
                         <td class="stat-value"> 0 </td>
                         <td>
                            <div class="stat-action">
-                              <button class="action-button" role="button"> Make Check </button>
+                              <button class="action-button make-check" role="button"> Make Check </button>
                            </div>
                         </td>
                      </tr>
@@ -230,7 +230,7 @@
                         <td class="stat-value"> 0 </td>
                         <td>
                            <div class="stat-action">
-                              <button class="action-button" role="button"> Make Check </button>
+                              <button class="action-button make-check" role="button"> Make Check </button>
                            </div>
                         </td>
                      </tr>
@@ -240,7 +240,7 @@
                         <td class="stat-value"> 0 </td>
                         <td>
                            <div class="stat-action">
-                              <button class="action-button" role="button"> Make Check </button>
+                              <button class="action-button make-check" role="button"> Make Check </button>
                            </div>
                         </td>
                      </tr>
@@ -250,7 +250,7 @@
                         <td class="stat-value"> 0 </td>
                         <td>
                            <div class="stat-action">
-                              <button class="action-button" role="button"> Make Check </button>
+                              <button class="action-button make-check" role="button"> Make Check </button>
                            </div>
                         </td>
                      </tr>
@@ -260,7 +260,7 @@
                         <td class="stat-value"> 0 </td>
                         <td>
                            <div class="stat-action">
-                              <button class="action-button" role="button"> Make Check </button>
+                              <button class="action-button make-check" role="button"> Make Check </button>
                            </div>
                         </td>
                      </tr>
@@ -338,8 +338,16 @@
 
       <div id="inventory">
          <h2>Inventory</h2>
-         <div id="items" class="full-width-block">
-            <h3>Items</h3>
+
+         <div class="inventory-button-bar">
+            <button class="inventory-button" onclick="openInventory('Weapons')">Weapons</button>
+            <button class="inventory-button" onclick="openInventory('Backpack')">Backpack</button>
+            <button class="inventory-button" onclick="openInventory('Pockets')">Pockets</button>
+          </div>
+
+         <div id="Weapons" class="full-width-block inventory">
+            
+            <h3>Weapons</h3>
             
             <div class="stat-box">
                <div class="item-name"> Pistol </div>
@@ -370,6 +378,75 @@
                <div class="item-qty"> 2 </div>
                <button class="action-button">Use</button></p> 
             </div>
+
+         </div>
+
+         <div id="Backpack" class="full-width-block inventory" style="display:none">
+            
+            <h3>Backpack</h3>
+            
+            <div class="stat-box">
+               <div class="item-name"> VR Goggles </div>
+               <div class="item-qty"></div>
+               <button class="action-button">Use</button></p> 
+            </div>
+            
+            <div class="stat-box">
+               <div class="item-name"> Lockpicking Set </div>
+               <div class="item-qty"></div>
+               <button class="action-button">Use</button></p> 
+            </div>
+            
+            <div class="stat-box">
+               <div class="item-name"> Extra pistol mag </div>
+               <div class="item-qty"> 3 </div>
+               <button class="action-button">Use</button></p> 
+            </div>
+            
+            <div class="stat-box">
+               <div class="item-name"> MRE </div>
+               <div class="item-qty"> 1 </div>
+               <button class="action-button">Use</button></p> 
+            </div>
+            
+            <div class="stat-box">
+               <div class="item-name"> Cyberdeck </div>
+               <div class="item-qty"> 1 </div>
+               <button class="action-button">Use</button></p> 
+            </div>
+         </div>  
+
+            <div id="Pockets" class="full-width-block inventory" style="display:none">
+               
+               <h3>Pockets</h3>
+               
+               <div class="stat-box">
+                  <div class="item-name"> Bubble Gum </div>
+                  <div class="item-qty"></div>
+                  <button class="action-button">Use</button></p> 
+               </div>
+               
+               <div class="stat-box">
+                  <div class="item-name"> 250eb Chip </div>
+                  <div class="item-qty"></div>
+                  <button class="action-button">Use</button></p> 
+               </div>
+               
+               <div class="stat-box">
+                  <div class="item-name"> Agent </div>
+                  <div class="item-qty"></div>
+                  <button class="action-button">Use</button></p> 
+               </div>
+               
+               <div class="stat-box">
+                  <div class="item-name"> Key to your appartment </div>
+                  <button class="action-button">Use</button></p> 
+               </div>
+               
+               <div class="stat-box">
+                  <div class="item-name"> Pack of Smokes </div>
+                  <button class="action-button">Use</button></p> 
+               </div>
 
          </div>
       </div>

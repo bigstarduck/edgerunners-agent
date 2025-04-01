@@ -58,7 +58,7 @@ class Stat {
       let check_result = new StatCheckResult(this, dice_result);
       game_log.logEvent(check_result);
       game_log.render();
-      // alert(check_result);
+      alert(check_result);
    }
 
    render() {
@@ -465,4 +465,14 @@ class Weapon{
    render() {
       return render_stat(this);
    }
+
+}
+
+function openInventory(inventoryType) {
+var i;
+var x = document.getElementsByClassName("inventory");
+for (i = 0; i < x.length; i++) {
+   x[i].style.display = "none";  
+}
+document.getElementById(inventoryType).style.display = "block";  
 }
